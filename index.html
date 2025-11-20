@@ -1,4 +1,4 @@
-Ôªø<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -39,7 +39,7 @@
     <main>
       <section class="hero" id="top">
         <div class="hero-copy">
-          <p class="eyebrow">Built for youth team sports, ages 5‚Äì12</p>
+          <p class="eyebrow">Built for youth team sports, ages 5ñ12</p>
           <h1>BenchBalancer keeps every kid playing, every rotation fair.</h1>
           <p class="lede">Smart, simple rotation tracking so you stop juggling paper charts, stopwatches, and sideline pressure. Parents see the receipts, coaches stay calm.</p>
           <div class="hero-ctas">
@@ -70,18 +70,18 @@
         <div class="section-head">
           <p class="eyebrow">Why BenchBalancer</p>
           <h2>Fair, fast, stress-free rotations for youth teams.</h2>
-          <p class="section-lede">Purpose-built for coaches of kids 5‚Äì12 to keep playtime balanced, calm the sidelines, and make subs make sense across any sport.</p>
+          <p class="section-lede">Purpose-built for coaches of kids 5ñ12 to keep playtime balanced, calm the sidelines, and make subs make sense across any sport.</p>
         </div>
         <div class="card-grid">
           <article class="card">
             <p class="card-tag">01</p>
             <h3>Balance rotations instantly</h3>
-            <p>Auto-track who played, who‚Äôs next, and keep minutes equal without juggling timers or paper.</p>
+            <p>Auto-track who played, whoís next, and keep minutes equal without juggling timers or paper.</p>
           </article>
           <article class="card">
             <p class="card-tag">02</p>
             <h3>Zero parent drama</h3>
-            <p>Show live minutes to answer ‚ÄúWhy isn‚Äôt my kid playing more?‚Äù with data, not debates.</p>
+            <p>Show live minutes to answer ìWhy isnít my kid playing more?î with data, not debates.</p>
           </article>
           <article class="card">
             <p class="card-tag">03</p>
@@ -115,7 +115,7 @@
             <div class="dot"></div>
             <div>
               <h3>Live minute tracking + fairness</h3>
-              <p>See who‚Äôs had too much, who‚Äôs had too little, and stay balanced automatically. Data-backed proof keeps parents confident.</p>
+              <p>See whoís had too much, whoís had too little, and stay balanced automatically. Data-backed proof keeps parents confident.</p>
             </div>
           </div>
         </div>
@@ -158,19 +158,19 @@
       <section class="highlights" id="better">
         <div class="section-head">
           <p class="eyebrow">Why it beats paper & timers</p>
-          <h2>Accuracy, structure, and fairness ‚Äî in real time.</h2>
-          <p class="section-lede">Stopwatches, random timers, scrap paper, mental math, and guesswork don‚Äôt survive chaotic games. BenchBalancer keeps everything precise so you can coach with calm.</p>
+          <h2>Accuracy, structure, and fairness ó in real time.</h2>
+          <p class="section-lede">Stopwatches, random timers, scrap paper, mental math, and guesswork donít survive chaotic games. BenchBalancer keeps everything precise so you can coach with calm.</p>
         </div>
         <div class="card-grid">
           <article class="card">
             <p class="card-tag">01</p>
             <h3>Live tracking, not guessing</h3>
-            <p>Real-time minutes per kid so you know exactly who‚Äôs next and why.</p>
+            <p>Real-time minutes per kid so you know exactly whoís next and why.</p>
           </article>
           <article class="card">
             <p class="card-tag">02</p>
             <h3>Automatic fairness system</h3>
-            <p>Equal time baked in ‚Äî great for parent expectations and club standards.</p>
+            <p>Equal time baked in ó great for parent expectations and club standards.</p>
           </article>
           <article class="card">
             <p class="card-tag">03</p>
@@ -182,7 +182,7 @@
 
       <section class="highlights" id="who">
         <div class="section-head compact">
-          <p class="eyebrow">Who it‚Äôs for</p>
+          <p class="eyebrow">Who itís for</p>
           <h2>Youth team coaches and clubs who need equal time.</h2>
           <p class="section-lede">PCYC and local clubs, rep teams, school teams, volunteer parents, and programs that value fairness across every sport.</p>
         </div>
@@ -200,7 +200,7 @@
         <div class="cta-inner">
           <div class="cta-copy">
             <p class="eyebrow">Join the waitlist</p>
-            <h2>Join the waitlist for BenchBalancer‚Äôs launch.</h2>
+            <h2>Join the waitlist for BenchBalancerís launch.</h2>
             <p class="section-lede">Drop your email to lock a spot. We will confirm instantly and keep you updated as we roll out BenchBalancer for youth team sports.</p>
             <ul class="list">
               <li>No spam, ever.</li>
@@ -268,18 +268,37 @@
 
     const isValidEmail = (value) => /.+@.+\..+/.test(value.trim());
 
-    form?.addEventListener('submit', (event) => {
+        form?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const email = form.email.value;
+      const email = form.email.value.trim();
+
+      statusEl.classList.remove('error');
+
       if (!isValidEmail(email)) {
         statusEl.textContent = 'Please enter a valid email.';
         statusEl.classList.add('error');
         return;
       }
 
-      statusEl.classList.remove('error');
-      statusEl.textContent = 'You are on the waitlist. We will be in touch soon.';
-      form.reset();
+      statusEl.textContent = 'Submitting...';
+
+      try {
+        const response = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        statusEl.textContent = 'You are on the waitlist. We will be in touch soon.';
+        form.reset();
+      } catch (error) {
+        statusEl.textContent = 'Something went wrong. Please try again.';
+        statusEl.classList.add('error');
+      }
     });
 
     if (sliderImages.length) {
@@ -301,3 +320,4 @@
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
+
