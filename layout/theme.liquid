@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title | default: 'BenchBalancer' }}</title>
+  <meta name="description" content="Join the BenchBalancer waitlist. Track, balance, and optimise your bench rotations using next-gen analytics inspired by elite coaching workflows.">
+  <link rel="canonical" href="{{ canonical_url | default: shop.url }}">
+  <meta property="og:title" content="BenchBalancer - Smarter Bench, Smarter Game">
+  <meta property="og:description" content="Youth team analytics that help coaches optimise rotations and keep playtime fair. Join the waitlist.">
+  <meta property="og:image" content="{{ 'benchbalancer-logo.png' | asset_url }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  {{ 'style.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body>
+  {{ content_for_layout }}
+  {{ content_for_footer }}
+</body>
+</html>

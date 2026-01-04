@@ -397,7 +397,7 @@ section {
 }
 
 .list li::before {
-  content: "•";
+  content: "\2022";
   color: var(--accent);
   margin-right: 8px;
 }
@@ -527,10 +527,10 @@ input[type="email"]:focus {
   }
 
   .logo-mark {
-    width: 46px;
-    height: 46px;
-    padding: 4px;
-    border-radius: 12px;
+    width: 64px;
+    height: 64px;
+    padding: 6px;
+    border-radius: 14px;
   }
 
   .nav {
@@ -607,3 +607,7 @@ input[type="email"]:focus {
     margin: 54px 0;
   }
 }
+
+
+
+
