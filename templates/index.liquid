@@ -77,15 +77,20 @@
             <li>Launch insights, early demos, and product drops.</li>
           </ul>
         </div>
-        <form class="waitlist-form" id="waitlist-form" novalidate>
+        {% form 'customer', id: 'waitlist-form', novalidate: true %}
           <label class="field">
             <span>Email</span>
-            <input type="email" name="email" required placeholder="you@example.com" aria-label="Email address">
+            <input type="email" name="contact[email]" required placeholder="you@example.com" aria-label="Email address">
+            <input type="hidden" name="contact[tags]" value="waitlist">
           </label>
           <button class="button full" type="submit">Join the waitlist</button>
-          <p class="form-status" role="status" aria-live="polite"></p>
+          {% if form.posted_successfully? %}
+            <p class="form-status">You are on the waitlist. We will be in touch soon.</p>
+          {% elsif form.errors %}
+            <p class="form-status error">{{ form.errors | default_errors }}</p>
+          {% endif %}
           <p class="privacy">By joining, you agree to receive BenchBalancer updates. You can opt out anytime.</p>
-        </form>
+        {% endform %}
       </div>
     </section>
   </main>
@@ -110,45 +115,7 @@
 </div>
 
 <script>
-  const form = document.querySelector('#waitlist-form');
-  const statusEl = document.querySelector('.form-status');
   const sliderImages = document.querySelectorAll('.phone-slider img');
-  const waitlistEndpoint = '{{ routes.root_url }}api/waitlist';
-
-  const isValidEmail = (value) => /.+@.+\..+/.test(value.trim());
-
-  form?.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const email = form.email.value.trim();
-
-    statusEl.classList.remove('error');
-
-    if (!isValidEmail(email)) {
-      statusEl.textContent = 'Please enter a valid email.';
-      statusEl.classList.add('error');
-      return;
-    }
-
-    statusEl.textContent = 'Submitting...';
-
-    try {
-      const response = await fetch(waitlistEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      statusEl.textContent = 'You are on the waitlist. We will be in touch soon.';
-      form.reset();
-    } catch (error) {
-      statusEl.textContent = 'Something went wrong. Please try again.';
-      statusEl.classList.add('error');
-    }
-  });
 
   if (sliderImages.length) {
     let currentSlide = 0;
