@@ -251,12 +251,11 @@ a:hover {
   object-fit: contain;
   padding: 6%;
   opacity: 0;
-  transition: none;
+  transition: opacity 600ms ease;
 }
 
 .phone-slider img.active {
   opacity: 1;
-  z-index: 1;
 }
 
 .phone-slider img:first-child {
